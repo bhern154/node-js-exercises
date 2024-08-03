@@ -3,10 +3,13 @@ const axios = require('axios');
 
 // takes in a file to read text from and console it
 function cat(file) {
+    // readFile and handle error and data
     fs.readFile(file, 'utf8', (error, data) => {
         if (error) {
+            // console error
             console.error(`Error reading ${file}\n\t${error}`)
         } else {
+            // log data
             console.log(data)
         }
     })
@@ -14,23 +17,27 @@ function cat(file) {
 
 // takes in a url to extract data from and console it
 function webCat(url){
+    // get url data using axios
     axios.get(url)
     .then(response => {
+        // console the data
         console.log(response.data);
     })
     .catch(error => {
-        console.error(`Error fetching ${url}`)
-        console.error(`\t${error}`)
+        // console error
+        console.error(`Error fetching ${url}\n\t${error}`)
     });
 }
 
 // writes data to a given output file
 function writeToFile(outputFile, data){
+    // write to file and handle the error and data
     fs.writeFile(outputFile, data, 'utf8', (error) => {
         if (error) {
-            console.error(`Couldn't write to ${outputFile}`);
-            console.error(`\t${error}`);
+            // console error
+            console.error(`Couldn't write to ${outputFile}\n\t${error}`);
         } else {
+            // console a 'success' message
             console.log(`no output, but ${outputFile} contains contents of ${data}`);
         }
     });
@@ -38,11 +45,13 @@ function writeToFile(outputFile, data){
 
 // takes in an INPUT file to read text from and an OUTPUT file to write the text to
 function catWrite(outputFile, inputFile) {
+    // readFile and handle error and data
     fs.readFile(inputFile, 'utf8', (error, data) => {
         if (error) {
-            console.error(`Error reading ${inputFile}`)
-            console.error(`\t${error}`)
+            // console error
+            console.error(`Error reading ${inputFile}\n\t${error}`)
         } else {
+            // provide output file and data to writeToFile 
             writeToFile(outputFile, data) // (outputFile, data)
         }
     })
@@ -50,13 +59,15 @@ function catWrite(outputFile, inputFile) {
 
 // takes in an INPUT url to extract data from and an OUTPUT file to write the data to
 function webCatWrite(outputFile, url){
+    // get url data using axios
     axios.get(url)
     .then(response => {
+        // provide output file and url data to writeToFile 
         writeToFile(outputFile, response.data) // (outputFile, data)
     })
     .catch(error => {
-        console.error(`Error fetching ${url}`)
-        console.error(`\t${error}`)
+        // console error
+        console.error(`Error fetching ${url}\n\t${error}`)
     });
 }
 

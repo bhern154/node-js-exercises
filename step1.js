@@ -1,11 +1,14 @@
 const fs = require('fs');
 
-function cat(path) {
-    fs.readFile(path, 'utf8', (error, data) => {
+// takes in a file to read text from and console it
+function cat(file) {
+    // readFile and handle error and data
+    fs.readFile(file, 'utf8', (error, data) => {
         if (error) {
-            console.error(`Error reading ${path}`)
-            console.error(`\t${error}`)
+            // console error
+            console.error(`Error reading ${file}\n\t${error}`)
         } else {
+            // log data
             console.log(data)
         }
     })
@@ -16,8 +19,11 @@ function cat(path) {
 // node step1.js one.txt
 const path = process.argv[2];
 
-if (path) {
+// check if path is a text file
+if (path.endsWith(".txt")) {
     cat(path);
-} else {
+} 
+// else, console error
+else {
     console.error('Please provide a file path as an argument.');
 }
